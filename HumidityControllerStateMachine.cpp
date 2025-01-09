@@ -19,11 +19,6 @@ void HumidityControllerStateMachine::HandleInput(HumidityControllerInput input) 
 				this->setState(TEMP_SELECTED);
 			}
 			break;
-		case NONE_SELECTED:
-			if (input != ENCODER_NONE) {
-				this->setState(TEMP_SELECTED);
-			}
-			break;
 		case TEMP_SELECTED:
 			if (input == ENCODER_PRESS) {
 				this->setState(CHANGING_TEMP);
@@ -41,8 +36,12 @@ void HumidityControllerStateMachine::HandleInput(HumidityControllerInput input) 
 		case CHANGING_TEMP:
 			if (input == ENCODER_PRESS) {
 				this->setState(TEMP_SELECTED);
-			} else if (input == ENCODER_RIGHT || input == ENCODER_LEFT) {
-				this->useCelcius = !this->useCelcius;
+			} else if (input == ENCODER_RIGHT) {
+				this->useCelcius = false;
+				this->setState(CHANGING_TEMP);
+			} else if (input == ENCODER_LEFT) {
+				this->useCelcius = true;
+				this->setState(CHANGING_TEMP);
 			}
 			break;
 		case CHANGING_HUMIDITY:
@@ -50,20 +49,22 @@ void HumidityControllerStateMachine::HandleInput(HumidityControllerInput input) 
 				this->setState(HUMIDITY_SELECTED);
 			} else if (input == ENCODER_RIGHT) {
 				this->targetHumidty++;
+				this->setState(CHANGING_HUMIDITY);
 			} else if (input == ENCODER_LEFT) {
 				this->targetHumidty--;
+				this->setState(CHANGING_HUMIDITY);
 			}
 			break;
 	}
 }
 
-void HumidityControllerStateMachine::idleTimeout() {
-	this->setState(IDLE);
+void HumidityControllerStateMachine::setState(HumidityControllerState state) {
+	// if (this->currentState == IDLE && state != IDLE) return;
+	
+	this->currentState = state;
+	this->stateChanged(state);
 }
 
-void HumidityControllerStateMachine::setState(HumidityControllerState state) {
-	if (state != this->currentState) {
-		this->currentState = state;
-		this->stateChanged(state);
-	}
+void HumidityControllerStateMachine::idleTimeout() {
+	this->setState(IDLE);
 }

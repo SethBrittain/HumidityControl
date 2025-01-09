@@ -1,30 +1,38 @@
-#include <stdlib.h>
+// #include <stdlib.h>
 
-#ifndef TIMER_MANAGER_H
-#define TIMER_MANAGER_H
+// #ifndef TIMER_MANAGER_H
+// #define TIMER_MANAGER_H
 
-typedef void (*timeoutFunctionPtr)();
+// // Time in ms
+// const unsigned int ONE_SECOND = 1000;
+// const unsigned int ONE_MINUTE = ONE_SECOND * 60;
+// const unsigned int ONE_HOUR = ONE_MINUTE * 60;
 
-typedef struct {
-	public:
-		bool enabled;
-		bool oneShot;
-		int duration;
-		timeoutFunctionPtr timeout;
-		unsigned long lastRun;
-} Timer;
+// typedef int (*millisFunctionPtr)();
+// typedef void (*timeoutFunctionType)();
 
-class TimerManager {
-	public:
-		// The number of timers added
-		int timerCount = 0;
-		TimerManager();
-		void tickTimers(unsigned long currentTime);
-		Timer* addTimer(int delay, timeoutFunctionPtr fn, bool enabled, bool oneShot);
-		void startTimer(Timer* t);
-		void stopTimer(Timer* t);
-	private:
-		Timer** timers;
-};
+// typedef struct {
+// 	public:
+// 		bool enabled;
+// 		bool oneShot;
+// 		int duration;
+// 		timeoutFunctionType timeout;
+// 		unsigned long lastRun;
+// } Timer;
 
-#endif
+// class TimerManager {
+// 	public:	
+// 		millisFunctionPtr getMillis;
+// 		Timer* AddTimer(int delay, timeoutFunctionType fn, bool enabled, bool oneShot);
+// 		int Count();
+		
+// 		void TickTimers();
+// 		void StartTimer(Timer* t);
+// 		void StopTimer(Timer* t);
+
+// 		TimerManager(millisFunctionPtr mill);
+// 	private:
+// 		std::vector<Timer*> timers;
+// };
+
+// #endif

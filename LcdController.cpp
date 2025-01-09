@@ -35,21 +35,25 @@ void LcdController::updateDisplay(HumidityControllerState state)
 	memset(lineTwo, 0, 17);
 	switch(state){
 		case IDLE:
-			// this->lcd.noDisplay();
-			break;
-		case NONE_SELECTED:
+			sprintf(lineOne, "Temp: %d%s%d%c%s", *(this->t1), ".", *(this->t2), 0xDF, *(this->useCelcius) ? "C" : "F");
+			sprintf(lineTwo, "Humi: %d.%d%s", *(this->h1), *(this->h2),"%");
 			break;
 		case TEMP_SELECTED:
-			sprintf(lineOne, ">Temp: %d%s%d%c%s", *(this->t1), ".", *(this->t2), 0xDF, this->useCelcius ? "C" : "F");
-			sprintf(lineTwo, "Humi: %d.%d%", *(this->h1), *(this->h2));
+			sprintf(lineOne, ">Temp: %d%s%d%c%s", *(this->t1), ".", *(this->t2), 0xDF, *(this->useCelcius) ? "C" : "F");
+			sprintf(lineTwo, "Humi: %d.%d%s", *(this->h1), *(this->h2),"%");
 			break;
 		case HUMIDITY_SELECTED:
-			sprintf(lineOne, "Temp: %d%s%d%c%s", *(this->t1), ".", *(this->t2), 0xDF, this->useCelcius ? "C" : "F");
-			sprintf(lineTwo, ">Humi: %d.%d%", *(this->h1), *(this->h2));
+			sprintf(lineOne, "Temp: %d%s%d%c%s", *(this->t1), ".", *(this->t2), 0xDF, *(this->useCelcius) ? "C" : "F");
+			sprintf(lineTwo, ">Humi: %d.%d%s", *(this->h1), *(this->h2),"%");
 			break;
 		case CHANGING_TEMP:
 			sprintf(lineOne, "    %cC    %cF    ", 0xDF, 0xDF);
-			sprintf(lineTwo, this->useCelcius ? "       ^" : "           ^");
+			if (*(this->useCelcius)) {
+				sprintf(lineTwo, "     ^");
+			} else {
+				sprintf(lineTwo, "           ^");
+			}
+
 			break;
 		case CHANGING_HUMIDITY:
 			sprintf(lineOne, "");

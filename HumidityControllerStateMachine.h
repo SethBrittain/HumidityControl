@@ -21,11 +21,12 @@ enum HumidityControllerInput
 	ENCODER_LEFT
 };
 
+typedef void (*stateChangedFunctionPtr)(HumidityControllerState);
 class HumidityControllerStateMachine
 {
 	public:
 		HumidityControllerState currentState;
-		void (*stateChanged)(HumidityControllerState);
+		stateChangedFunctionPtr stateChanged;
 		int t1;
 		int t2;
 		int h1;

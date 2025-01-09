@@ -1,11 +1,9 @@
-#include <LiquidCrystal.h>
 #include <Arduino.h>
+#include <LiquidCrystal.h>
 #include "HumidityControllerStateMachine.h";
+
 #ifndef LCD_CONTROLLER_H
 #define LCD_CONTROLLER_H
-
-// Degree Symbol
-
 
 class LcdController {
 	LiquidCrystal lcd;
